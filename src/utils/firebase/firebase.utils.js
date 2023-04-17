@@ -20,15 +20,16 @@ const firebaseConfig = {
   
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const provider = new GoogleAuthProvider;// we use new as we might need different providers for different forms of log-in.
+const googleprovider = new GoogleAuthProvider;// we use new as we might need different providers for different forms of log-in.
 
-provider.setCustomParameters({
+googleprovider.setCustomParameters({
     prompt: "select_account"
 });
 
 export const auth = getAuth();//dont use new keyword, as we only use 1 auth for the application
-export const signInWithGooglePopup = () => signInWithPopup(auth,provider)
+export const signInWithGooglePopup = () => signInWithPopup(auth,googleprovider)
 export const db = getFirestore();
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth,googleprovider);
 
 export const createUserDocumentFromAuth = async (userAuth) => {
   const userDocRef = doc(db,'users',userAuth.uid);
