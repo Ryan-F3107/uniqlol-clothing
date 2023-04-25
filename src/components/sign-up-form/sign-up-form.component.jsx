@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createAuthUserFromEmailandPassword } from "../../utils/firebase/firebase.utils";
 
 const DefaultFormFields =  {
     displayName: '',
@@ -11,6 +12,13 @@ const SignUpForm = () => {
     const [formFields, setFormFields] = useState(DefaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
     console.log("FormFields: ", formFields);
+
+    const handleSubmit = async (event) => {
+        event.preventdefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
+        //confirm that confirmPassword & password is the same.
+        
+    }
+
     const handleChange = (event) =>{
         const {name, value} = event.target;// "values" will come from the event.target object, values brought from the input tag - destructred into name and value
 
