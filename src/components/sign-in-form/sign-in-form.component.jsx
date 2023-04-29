@@ -28,10 +28,19 @@ const SignInForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
         try {
-            await signInAuthUserFromEmailandPassword(email,password)
+            await signInAuthUserFromEmailandPassword(email,password);
             resetFormFields();
         } catch (error) {
-            
+            switch(error.code){
+                case 'auth/wrong-password':
+                    alert("Incorrect password for email");
+                    break;
+                case 'auth/user-not-found':
+                    alert("Incorrect/invalid email or password");
+                    break;
+                default:
+                    console.log("Error from signing-in: ",error);
+            }
         }
     };
 
@@ -67,7 +76,7 @@ const SignInForm = () => {
                 />
                 <div className="buttons-container">
                     <Button buttonType={''} type='submit'>Sign In</Button>
-                    <Button buttonType={'google'} onClick={signInwithGoogle}>Google Sign In</Button>
+                    <Button type='button' buttonType={'google'} onClick={signInwithGoogle}>Google Sign In</Button> {/**If type is button, no longer type submit by default --not bound to form rules */}
                 </div>
             </form>
         </div>
