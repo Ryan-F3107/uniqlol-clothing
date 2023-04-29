@@ -2,6 +2,11 @@ import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
 import Button from "../button/button.component";
+import { 
+    createUserDocumentFromAuth, 
+    signInWithGooglePopup,
+    signInAuthUserFromEmailandPassword
+} from "../../utils/firebase/firebase.utils";
 
 const DefaultFormFields = {
     email: '',
@@ -15,10 +20,15 @@ const SignInForm = () => {
     const resetFormFields = () => {
         setFormFields(DefaultFormFields);
     }
+    const signInwithGoogle = async () => {
+        const { user } = await signInWithGooglePopup();
+        await createUserDocumentFromAuth(user); //we create a userDoc
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
         try {
+            await signInAuthUserFromEmailandPassword(email,password)
             resetFormFields();
         } catch (error) {
             
@@ -32,7 +42,7 @@ const SignInForm = () => {
     };
 
     return (
-        <div>
+        <div className="sign-in-container">
             <h2>Already have an account ?</h2>
             <span>
                 Sign in using Email and Password
@@ -55,10 +65,13 @@ const SignInForm = () => {
                     name="password"
                     value={password}
                 />
-                <Button buttonType={''} type='submit'>Sign In</Button>
+                <div className="buttons-container">
+                    <Button buttonType={''} type='submit'>Sign In</Button>
+                    <Button buttonType={'google'} onClick={signInwithGoogle}>Google Sign In</Button>
+                </div>
             </form>
         </div>
     );
-}
+};
 
 export default SignInForm;
