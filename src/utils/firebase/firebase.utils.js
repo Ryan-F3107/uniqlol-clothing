@@ -39,10 +39,8 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlepro
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
   if (!userAuth) return;
-
   const userDocRef = doc(db, 'users', userAuth.uid);
   const userSnapShot = await getDoc(userDocRef);
-  console.log("user Snapshot", userSnapShot);
   if (!userSnapShot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -59,11 +57,10 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
     }
   }
   return userDocRef;
-}
+};
 
 //function to create an auth user
 export const createAuthUserFromEmailandPassword = async (email, password) => {
   if (!email || !password) return; //protecting code
-  console.log("in CreateAuthUserFromEmailandPassword")
   return await createUserWithEmailAndPassword(auth, email, password);
 };

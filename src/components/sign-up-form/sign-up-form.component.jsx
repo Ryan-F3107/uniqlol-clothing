@@ -20,16 +20,14 @@ const SignUpForm = () => {
     }
 
     const handleSubmit = async (event) => {
-        console.log("Handle Submit ran")
-        event.preventdefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
+        event.preventDefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
         //confirm that confirmPassword & password is the same.
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             return;
         }
         try {
-            const { user } = createAuthUserFromEmailandPassword(email, password);
-            console.log('user: ', user)
+            const { user } = await createAuthUserFromEmailandPassword(email, password);
             await createUserDocumentFromAuth(user, { displayName })
             resetFormFields();
         } catch (error) {
@@ -39,7 +37,7 @@ const SignUpForm = () => {
                 console.log("user creation error: ", error);
             }
         }
-    }
+    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;// "values" will come from the event.target object, values brought from the input tag - destructred into name and value
@@ -54,7 +52,7 @@ const SignUpForm = () => {
                 Sign up using Email and Password
             </span>
             {/* name attribute is used in input tag to link the input tags value to the attribute in defaultFormFields object */}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>{/**on submit callback function is called when button of type submit is clicked */}
                 <FormInput
                     label={'Display name'}
                     type='text'
@@ -90,7 +88,7 @@ const SignUpForm = () => {
                     value={confirmPassword}
                 />
 
-                <Button buttonType={''}type='submit'>Sign Up</Button>
+                <Button buttonType={''} type='submit'>Sign Up</Button>
             </form>
         </div>
     );
