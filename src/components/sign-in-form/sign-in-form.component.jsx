@@ -1,40 +1,45 @@
 import { useState } from "react";
-import { createAuthUserFromEmailandPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import './sign-up-form.styles.scss';
+import './sign-in-form.styles.scss';
 import Button from "../button/button.component";
+import { 
+    createUserDocumentFromAuth, 
+    signInWithGooglePopup,
+    signInAuthUserFromEmailandPassword
+} from "../../utils/firebase/firebase.utils";
 
 const DefaultFormFields = {
-    displayName: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
 }
 
-const SignUpForm = () => {
+const SignInForm = () => {
     const [formFields, setFormFields] = useState(DefaultFormFields);
-    const { displayName, email, password, confirmPassword } = formFields;
+    const {email, password } = formFields;
 
     const resetFormFields = () => {
         setFormFields(DefaultFormFields);
     }
+    const signInwithGoogle = async () => {
+        const { user } = await signInWithGooglePopup();
+        await createUserDocumentFromAuth(user); //we create a userDoc
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
-        //confirm that confirmPassword & password is the same.
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        }
         try {
-            const { user } = await createAuthUserFromEmailandPassword(email, password);
-            await createUserDocumentFromAuth(user, { displayName })
+            await signInAuthUserFromEmailandPassword(email,password);
             resetFormFields();
         } catch (error) {
-            if (error.code === 'auth/email-already-in-use') {
-                alert('Cannot create user, email already in use');
-            } else {
-                console.log("user creation error: ", error);
+            switch(error.code){
+                case 'auth/wrong-password':
+                    alert("Incorrect password for email");
+                    break;
+                case 'auth/user-not-found':
+                    alert("Incorrect/invalid email or password");
+                    break;
+                default:
+                    console.log("Error from signing-in: ",error);
             }
         }
     };
@@ -46,22 +51,13 @@ const SignUpForm = () => {
     };
 
     return (
-        <div className="sign-up-container">
-            <h2>Don't have an account ?</h2>
+        <div className="sign-in-container">
+            <h2>Already have an account ?</h2>
             <span>
-                Sign up using Email and Password
+                Sign in using Email and Password
             </span>
             {/* name attribute is used in input tag to link the input tags value to the attribute in defaultFormFields object */}
             <form onSubmit={handleSubmit}>{/**on submit callback function is called when button of type submit is clicked */}
-                <FormInput
-                    label={'Display name'}
-                    type='text'
-                    required
-                    onChange={handleChange}
-                    name="displayName"
-                    value={displayName}
-                />
-
                 <FormInput
                     label={'Email'}
                     type="email"
@@ -78,20 +74,13 @@ const SignUpForm = () => {
                     name="password"
                     value={password}
                 />
-
-                <FormInput
-                    label={'Confirm Password'}
-                    type="password"
-                    required
-                    onChange={handleChange}
-                    name="confirmPassword"
-                    value={confirmPassword}
-                />
-
-                <Button buttonType={''} type='submit'>Sign Up</Button>
+                <div className="buttons-container">
+                    <Button buttonType={''} type='submit'>Sign In</Button>
+                    <Button type='button' buttonType={'google'} onClick={signInwithGoogle}>Google Sign In</Button> {/**If type is button, no longer type submit by default --not bound to form rules */}
+                </div>
             </form>
         </div>
     );
-}
+};
 
-export default SignUpForm;
+export default SignInForm;
