@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
 import Button from "../button/button.component";
-import { 
-    createUserDocumentFromAuth, 
+import {
+    createUserDocumentFromAuth,
     signInWithGooglePopup,
     signInAuthUserFromEmailandPassword
 } from "../../utils/firebase/firebase.utils";
+import { UserContext } from "../../contexts/user.context";
 
 const DefaultFormFields = {
     email: '',
@@ -15,7 +16,9 @@ const DefaultFormFields = {
 
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(DefaultFormFields);
-    const {email, password } = formFields;
+    const { email, password } = formFields;
+
+    const { setCurrentUser } = useContext(UserContext);   // we only want to set the Current user
 
     const resetFormFields = () => {
         setFormFields(DefaultFormFields);
@@ -28,10 +31,11 @@ const SignInForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
         try {
-            await signInAuthUserFromEmailandPassword(email,password);
+            const { user } = await signInAuthUserFromEmailandPassword(email, password);
+            setCurrentUser(user);
             resetFormFields();
         } catch (error) {
-            switch(error.code){
+            switch (error.code) {
                 case 'auth/wrong-password':
                     alert("Incorrect password for email");
                     break;
@@ -39,7 +43,7 @@ const SignInForm = () => {
                     alert("Incorrect/invalid email or password");
                     break;
                 default:
-                    console.log("Error from signing-in: ",error);
+                    console.log("Error from signing-in: ", error);
             }
         }
     };

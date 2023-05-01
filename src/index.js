@@ -4,13 +4,15 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { UserProvider } from './contexts/user.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    {console.log("Test1")}
-      <App/>
+      <UserProvider> {/**Required to use React Context */}
+        <App/>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

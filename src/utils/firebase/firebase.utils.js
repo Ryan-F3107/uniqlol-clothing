@@ -5,7 +5,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 
 import {
@@ -69,3 +70,5 @@ export const signInAuthUserFromEmailandPassword = async (email, password) => {
   if (!email || !password) return; //protecting code
   return await signInWithEmailAndPassword(auth, email, password);
 };
+export const signOutUser = async () => await signOut(auth);// since signOut is async, we get a promise
+// Remember: auth is a singleton class, it also keeps track of which user is signed in.
