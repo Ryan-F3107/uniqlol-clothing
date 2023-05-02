@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 
 import {
@@ -72,3 +73,6 @@ export const signInAuthUserFromEmailandPassword = async (email, password) => {
 };
 export const signOutUser = async () => await signOut(auth);// since signOut is async, we get a promise
 // Remember: auth is a singleton class, it also keeps track of which user is signed in.
+export const onAuthStateChangedHandler = (callback) => {
+  onAuthStateChanged(auth,callback);// callback function is run as well
+}
