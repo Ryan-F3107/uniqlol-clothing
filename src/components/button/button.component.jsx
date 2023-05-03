@@ -1,4 +1,5 @@
 /*
+Types of buttons on site:
 default,
 inverted,
 google Sign-in
