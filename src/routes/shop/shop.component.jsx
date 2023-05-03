@@ -1,14 +1,14 @@
 import SHOP_DATA from '../../shop-data.json';
 
 const Shop = () => {
-    return(
+    return (
         <div>
-            {SHOP_DATA.map(({id, name}) =>(
+            {SHOP_DATA.map(({ id, name }) => (
                 <div key={id}>
                     <h1>{name}</h1>
                 </div>
             ))}
-        </div>        
+        </div>
     )
 }
 
