@@ -4,6 +4,8 @@ import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import './navigation.styles.scss';
 import { UserContext } from '../../contexts/user.context';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
+import CardIcon from '../../components/card-icon/card-icon.component';
+import CardDropdown from '../../components/card-dropdown/card-dropdown.component';
 
 const Navigation = () => {
     const { currentUser } = useContext(UserContext);  //  we want the value of the current User
@@ -28,7 +30,9 @@ const Navigation = () => {
                                 </Link>
                             )
                     }
+                    <CardIcon/>
                 </div>
+            <CardDropdown/>
             </div>
             <Outlet />
         </Fragment>
