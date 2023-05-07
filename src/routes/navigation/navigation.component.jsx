@@ -34,7 +34,7 @@ const Navigation = () => {
                     }
                     <CardIcon/>
                     <div>
-                        {isCartOpen && <CardDropdown/>}
+                        {isCartOpen && <CardDropdown/>}{/**Cart dropdown will dissapear when isCartOpen is false */}
                     </div>
                 </div>
             </div>
