@@ -14,7 +14,14 @@ export const CartContext = createContext({
  * Return new array with modified items
  */
 const addCartItem = (cartItems,productToAdd) => {
+    const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
+    // if it exists we return a new array, not mutant the existing array
+    if(existingCartItem){
+        return cartItems.map(// cartItem is similar to A[i] --> the value in the array. ** map does not change the orginal array, it creates a new one
+            (cartItem) => cartItem.id === productToAdd.id ? {...cartItem, quantity: cartItem.quantity+1} : cartItem );
+    }
 
+    return [...cartItems, {...productToAdd, quantity: 1}]
 }
 
 export const CartProvider = ({children}) => {
@@ -24,7 +31,7 @@ export const CartProvider = ({children}) => {
     const addItemToCart = (productToAdd) => {
         setCartItems(addCartItem(cartItems,productToAdd));
     }
-    const value = {isCartOpen, setIsCartOpen}
+    const value = {isCartOpen, setIsCartOpen, addItemToCart, cartItems}
     return(
         <CartContext.Provider value={value}>{children}</CartContext.Provider>
     )
