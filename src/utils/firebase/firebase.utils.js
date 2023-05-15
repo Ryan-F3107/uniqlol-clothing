@@ -14,7 +14,9 @@ import {
   getFirestore,
   doc,
   getDoc,
-  setDoc
+  setDoc,
+  collection, //allows us to get a collection reference
+  writeBatch
 } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -38,6 +40,20 @@ googleprovider.setCustomParameters({
 export const auth = getAuth();//dont use new keyword, as we only use 1 auth for the application
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleprovider)
 export const db = getFirestore();
+
+//functions is called and the categories are provided -- to insert into Firestore
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db,collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);//set the batch with the document Reference and object
+  });
+  await batch.commit();
+  console.log("done");
+}
+
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleprovider);
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
