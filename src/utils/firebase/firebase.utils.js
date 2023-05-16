@@ -16,7 +16,9 @@ import {
   getDoc,
   setDoc,
   collection, //allows us to get a collection reference
-  writeBatch
+  writeBatch,
+  query,
+  getDocs
 } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -43,7 +45,7 @@ export const db = getFirestore();
 
 //functions is called and the categories are provided -- to insert into Firestore
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
-  const collectionRef = collection(db,collectionKey);
+  const collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
 
   objectsToAdd.forEach((object) => {
@@ -52,6 +54,20 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
   });
   await batch.commit();
   console.log("done");
+}
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef) // generate query of the collection
+  const querySnapshot = await getDocs(q);
+  //querySnapshot.docs// gives an array of documents and snapshot is the data itself
+  //will be creating our JSON object from the documents - to place onto webpage
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {})
+  return categoryMap;
 }
 
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleprovider);
