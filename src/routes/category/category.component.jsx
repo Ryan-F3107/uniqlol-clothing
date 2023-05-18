@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, Fragment } from 'react';
 import { CategoriesContext } from '../../contexts/categories.context';
 import ProductCard from '../../components/product-card/product-card.component';
 import './category.styles.scss';
@@ -15,11 +15,15 @@ const Category = () => {
     }, [categoriesMap,category])
 
     return (
+        <Fragment>
+        <h2 className='category-title'>{category.toUpperCase()}</h2>
         <div className='category-container'>
             {   //if products is undefined since, the app has not retrieved from firebase - Don't run it
                 products && products.map((product) => <ProductCard key={product.id} product={product}/>)
             }
         </div>
+        </Fragment>
+        
     );
 }
 
