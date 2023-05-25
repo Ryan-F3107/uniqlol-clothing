@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
-import Button from "../button/button.component";
+import Button, {BUTTON_TYPE_CLASS} from "../button/button.component";
 import {
     signInWithGooglePopup,
     signInAuthUserFromEmailandPassword
@@ -72,8 +72,8 @@ const SignInForm = () => {
                     value={password}
                 />
                 <div className="buttons-container">
-                    <Button buttonType={''} type='submit'>Sign In</Button>
-                    <Button type='button' buttonType={'google'} onClick={signInwithGoogle}>Google Sign In</Button> {/**If type is button, no longer type submit by default --not bound to form rules */}
+                    <Button buttonType={BUTTON_TYPE_CLASS.base} type='submit'>Sign In</Button>
+                    <Button type='button' buttonType={BUTTON_TYPE_CLASS.google} onClick={signInwithGoogle}>Google Sign In</Button> {/**If type is button, no longer type submit by default --not bound to form rules */}
                 </div>
             </form>
         </div>
