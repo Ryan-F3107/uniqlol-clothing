@@ -1,6 +1,7 @@
 //Pass a default value, not necessarily the initial value. Actual value you want to access
 import { createContext, useEffect, useReducer } from 'react'
 import { onAuthStateChangedHandler, createUserDocumentFromAuth } from '../utils/firebase/firebase.utils';
+import { createAction } from '../utils/reducer/reducer.utils';
 
 //UserContext also needs a default value
 export const UserContext = createContext({
@@ -30,10 +31,10 @@ const INITIAL_STATE = {
 //UserProvider lets the children access any of the values from useState, as long as the children is wrapped within the userContext tags
 export const UserProvider = ({ children }) => {
     //const [ currentUser, setCurrentUser ] = useState(null)// pass in null for the initial currentUser
-    const [ state, dispatch ] = useReducer(userReducer, INITIAL_STATE)  //from useReducer, get back new state and dispatcher - dispatcher uses the action.
+    const [state, dispatch] = useReducer(userReducer, INITIAL_STATE)  //from useReducer, get back new state and dispatcher - dispatcher uses the action.
     const { currentUser } = state;
     const setCurrentUser = (user) => {
-        dispatch({ type: USER_ACTION_TYPE.SET_CURRENT_USER, payload: user });
+        dispatch(createAction(USER_ACTION_TYPE.SET_CURRENT_USER, user));
     }
     const value = { currentUser, setCurrentUser };// value is an object passed onto UserContext.Provider as a value attribute. Children can then access the useState values
 
