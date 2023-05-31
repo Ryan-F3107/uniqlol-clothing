@@ -51,6 +51,6 @@ export const UserProvider = ({ children }) => {
             setCurrentUser(user);// if we sign out, user is null -- the auth keeps track of the user logins
         });
         return unsubscribe;
-    }, []);//
+    }, []); //ignore dispatch related warning, missing dependecy is not needed. UseEffect is run once when the app is initialized.
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
