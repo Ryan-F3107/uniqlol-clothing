@@ -1,0 +1,44 @@
+[1mdiff --git a/src/App.js b/src/App.js[m
+[1mindex 3eec219..59de9b0 100644[m
+[1m--- a/src/App.js[m
+[1m+++ b/src/App.js[m
+[36m@@ -33,4 +33,5 @@[m [mconst App = () => {[m
+     </Routes>[m
+   );[m
+ };[m
+[32m+[m
+ export default App;[m
+\ No newline at end of file[m
+[1mdiff --git a/src/contexts/user.context.jsx b/src/contexts/user.context.jsx[m
+[1mindex b89dc09..84b3c69 100644[m
+[1m--- a/src/contexts/user.context.jsx[m
+[1m+++ b/src/contexts/user.context.jsx[m
+[36m@@ -1,3 +1,4 @@[m
+[32m+[m[32m// FILE NOT NEEDED AFTER IMPLEMENTING REDUX[m
+ //Pass a default value, not necessarily the initial value. Actual value you want to access[m
+ import { createContext, useEffect, useReducer } from 'react'[m
+ import { onAuthStateChangedHandler, createUserDocumentFromAuth } from '../utils/firebase/firebase.utils';[m
+[1mdiff --git a/src/store/root-reducer.js b/src/store/root-reducer.js[m
+[1mindex c265580..f95b065 100644[m
+[1m--- a/src/store/root-reducer.js[m
+[1m+++ b/src/store/root-reducer.js[m
+[36m@@ -1,6 +1,8 @@[m
+ import { combineReducers } from "redux";// lets us create one big reducer[m
+ import { userReducer } from "./user/user.reducer";[m
+[32m+[m[32mimport { categoriesReducer } from "./categories/category.reducer";[m
+ [m
+ export const rootReducer = combineReducers({[m
+     user: userReducer,[m
+[32m+[m[32m    categories: categoriesReducer,[m
+ });[m
+\ No newline at end of file[m
+[1mdiff --git a/src/store/user/user.types.js b/src/store/user/user.types.js[m
+[1mindex de3a2c2..4c01e8d 100644[m
+[1m--- a/src/store/user/user.types.js[m
+[1m+++ b/src/store/user/user.types.js[m
+[36m@@ -1,3 +1,3 @@[m
+ export const USER_ACTION_TYPE = {[m
+[31m-    SET_CURRENT_USER: 'SET_CURRENT_USER',[m
+[32m+[m[32m    SET_CURRENT_USER: 'user/SET_CURRENT_USER',[m
+ }[m
+\ No newline at end of file[m

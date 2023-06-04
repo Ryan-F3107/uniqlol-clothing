@@ -1,3 +1,4 @@
+// FILE NOT NEEDED AFTER IMPLEMENTING REDUX
 //Pass a default value, not necessarily the initial value. Actual value you want to access
 import { createContext, useEffect, useReducer } from 'react'
 import { onAuthStateChangedHandler, createUserDocumentFromAuth } from '../utils/firebase/firebase.utils';
