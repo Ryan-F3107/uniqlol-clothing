@@ -62,12 +62,7 @@ export const getCategoriesAndDocuments = async () => {
   const querySnapshot = await getDocs(q);
   //querySnapshot.docs// gives an array of documents and snapshot is the data itself
   //will be creating our JSON object from the documents - to place onto webpage
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {})
-  return categoryMap;
+  return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
 }
 
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleprovider);
