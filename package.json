@@ -15,9 +15,11 @@
     "redux": "^4.2.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "reselect": "^4.1.8",
     "sass": "^1.58.0",
     "styled-components": "^5.3.10",
+    "thunk": "^0.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
