@@ -8,7 +8,7 @@ import thunk from "redux-thunk";
 const persistConfig = {
     key:'root',
     storage,
-    blacklist: ['user']//reducers we don't want to persist.It won't persist the user logged in as that is done elsewhere
+    whitelist: ['cart']//reducers we don't want to persist.It won't persist the user logged in as that is done elsewhere
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
