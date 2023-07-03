@@ -86,7 +86,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
       console.log("Error creating the user: ", error.message);
     }
   }
-  return userDocRef;
+  return userSnapShot;
 };
 
 //function to create an auth user
@@ -102,4 +102,17 @@ export const signOutUser = async () => await signOut(auth);// since signOut is a
 // Remember: auth is a singleton class, it also keeps track of which user is signed in.
 export const onAuthStateChangedHandler = (callback) => {
   onAuthStateChanged(auth, callback);// callback function is run as well
+}
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    )
+  })
 }
