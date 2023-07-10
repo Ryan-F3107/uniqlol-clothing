@@ -2,16 +2,16 @@ import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
 import Button, {BUTTON_TYPE_CLASS} from "../button/button.component";
-import {
-    signInWithGooglePopup,
-    signInAuthUserFromEmailandPassword
-} from "../../utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
+import { googleSignInStart, emailSignInStart } from "../../store/user/user.action";
+
 const DefaultFormFields = {
     email: '',
     password: ''
 }
 
 const SignInForm = () => {
+    const dispatch = useDispatch();
     const [formFields, setFormFields] = useState(DefaultFormFields);
     const { email, password } = formFields;
 
@@ -19,13 +19,13 @@ const SignInForm = () => {
         setFormFields(DefaultFormFields);
     }
     const signInwithGoogle = async () => {
-        await signInWithGooglePopup();
+        dispatch(googleSignInStart());
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
         try {
-            await signInAuthUserFromEmailandPassword(email, password);
+            dispatch(emailSignInStart(email, password));
             resetFormFields();
         } catch (error) {
             switch (error.code) {
