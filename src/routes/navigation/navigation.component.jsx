@@ -1,16 +1,19 @@
 import { Outlet } from 'react-router-dom';
-import { Fragment, useContext } from 'react';
+import { Fragment } from 'react';
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import { NavigationContainer, LogoContainer, NavLinks, NavLink } from './navigation.styles';
-import { UserContext } from '../../contexts/user.context';
-import { signOutUser } from '../../utils/firebase/firebase.utils';
+import { signOutStart } from '../../store/user/user.action';
 import CardIcon from '../../components/card-icon/card-icon.component';
 import CardDropdown from '../../components/card-dropdown/card-dropdown.component';
-import { CartContext } from '../../contexts/cart.context';
+import { useSelector, useDispatch } from 'react-redux';  //extract values from the redux store.
+import { selectCurrentUser } from '../../store/user/user.selector';
+import { selectIsCartOpen } from '../../store/cart/cart.selector';
 
 const Navigation = () => {
-    const { currentUser } = useContext(UserContext);  //  we want the value of the current User
-    const {isCartOpen} = useContext(CartContext)
+    const dispatch = useDispatch();
+    const currentUser = useSelector(selectCurrentUser);
+    const isCartOpen = useSelector(selectIsCartOpen);
+    const signOutUser = () => dispatch(signOutStart());
 
     return (
         <Fragment>
