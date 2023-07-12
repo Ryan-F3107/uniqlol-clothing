@@ -2,6 +2,7 @@ import './checkout.styles.scss';
 import CheckOutItem from '../../components/checkout-item/checkout-item.component';
 import { selectCartItems,selectCartTotal } from '../../store/cart/cart.selector';
 import { useSelector } from 'react-redux';
+import PaymentForm from '../../components/payment-form/payment-form.component';
 
 const Checkout = () => {
     const cartItems = useSelector(selectCartItems);
@@ -30,6 +31,7 @@ const Checkout = () => {
                 cartItems.map((cartItem) => (<CheckOutItem key={cartItem.id} cartItem={cartItem}/>) )   //explicitly return one liner items with () without return keyword
             }
             <span className='total'>Total: ${cartTotal}</span>
+            <PaymentForm/>
         </div>
     )
 }
