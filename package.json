@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/styled-components": "^5.1.26",
     "dotenv": "^16.3.1",
     "firebase": "^9.19.1",
     "react": "^18.2.0",
@@ -25,6 +26,7 @@
     "stripe": "^12.12.0",
     "styled-components": "^5.3.10",
     "thunk": "^0.0.1",
+    "typed-redux-saga": "^1.5.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
