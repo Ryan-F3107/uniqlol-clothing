@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.styles.scss';
 import Button, {BUTTON_TYPE_CLASS} from "../button/button.component";
@@ -20,7 +21,7 @@ const SignUpForm = () => {
         setFormFields(DefaultFormFields);
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault(); //We prevent any default value from the form to be passed. We will handle everything related to the form
         //confirm that confirmPassword & password is the same.
         if (password !== confirmPassword) {
@@ -31,7 +32,7 @@ const SignUpForm = () => {
             dispatch(signUpStart(email, password, displayName));
             resetFormFields();
         } catch (error) {
-            if (error.code === 'auth/email-already-in-use') {
+            if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
                 alert('Cannot create user, email already in use');
             } else {
                 console.log("user creation error: ", error);
@@ -39,7 +40,7 @@ const SignUpForm = () => {
         }
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;// "values" will come from the event.target object, values brought from the input tag - destructred into name and value
 
         setFormFields({ ...formFields, [name]: value });// We spread the formfield values and set one value to each component - displayName = JohnnyBoy
