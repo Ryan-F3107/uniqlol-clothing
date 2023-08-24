@@ -4,13 +4,14 @@ import CartItem from '../cardItem/cart-item.component';
 import { useNavigate } from 'react-router-dom';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
 
 const CardDropdown = () =>{
     const cartItems = useSelector(selectCartItems);
     const navigate = useNavigate();
-    const goToCheckoutHandler = () => {
+    const goToCheckoutHandler = useCallback(() => {
         navigate('/checkout')
-    }
+    },[]);// wont be re-render unless whatever in [] changes
 
     return(
         <CartDropdownContainer>

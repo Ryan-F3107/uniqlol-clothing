@@ -3,7 +3,7 @@ import { USER_ACTION_TYPE } from "./user.types";
 import { UserData, AdditionalInformation } from "../../utils/firebase/firebase.utils";
 
 export type CheckUserSession = Action<USER_ACTION_TYPE.CHECK_USER_SESSION>
-export type setCurrentUser = ActionWithPayload<USER_ACTION_TYPE.SET_CURRENT_USER, UserData>
+export type SetCurrentUser = ActionWithPayload<USER_ACTION_TYPE.SET_CURRENT_USER, UserData>
 export type GoogleSignInStart = Action<USER_ACTION_TYPE.GOOGLE_SIGN_IN_START>
 export type EmailSignInStart = ActionWithPayload<USER_ACTION_TYPE.EMAIL_SIGN_IN_START, {email: string, password: string}>
 export type SignInSuccess = ActionWithPayload<USER_ACTION_TYPE.SIGN_IN_SUCCESS, UserData>
@@ -16,7 +16,7 @@ export type SignOutSuccess = Action<USER_ACTION_TYPE.SIGN_OUT_SUCCESS>
 export type SignOutFailed = ActionWithPayload<USER_ACTION_TYPE.SIGN_OUT_FAILED, Error>
 
 
-export const setCurrentUser = withMatcher((user: UserData): setCurrentUser => 
+export const setCurrentUser = withMatcher((user: UserData): SetCurrentUser => 
 createAction(USER_ACTION_TYPE.SET_CURRENT_USER, user)); //returns back an Action object.
 
 export const checkUserSession = withMatcher((): CheckUserSession => 

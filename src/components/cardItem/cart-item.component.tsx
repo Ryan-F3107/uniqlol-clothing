@@ -1,6 +1,10 @@
 import './cart-item.styles.scss';
-
-const CartItem = ({cartItem}) => {
+import { FC, memo } from 'react';
+import { CartItem as TCartItem } from '../../store/cart/cart.type';
+type CartIemProps = {
+    cartItem: TCartItem;
+}
+const CartItem: FC<CartIemProps> = memo(({cartItem}) => {
     const {name, imageUrl, price, quantity} = cartItem;
     return(
         <div className='cart-item-container'>
@@ -11,6 +15,6 @@ const CartItem = ({cartItem}) => {
             </div>
         </div>
     )
-}
+});
 
 export default CartItem;
