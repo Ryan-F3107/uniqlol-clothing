@@ -4,13 +4,19 @@ A clothing app developed (tittled Uniqlol, inspired by Uniqlo) developed while l
 ## Project Description:
 This applications immitates your favorite clothing stores, with the ability to add items into the shopping cart. It contains items like shoes, hats, jackets and so on, for men and women. Using the Stripe API, a mock credit card can be used to purchase your "items".
 
-## Project Goal:
+### Project Goal:
 This project was worked on while learning about React. Hence, it contains a lot of code commented out,redone in a different way as progress was made. It also includes comments for my understanding. Working on this project is intended to get a better understanding of React. Also, gain experience in front-end development.
 
-## Dummy Credit Card:
+### Dummy Credit Card:
+```
 Card Number: 4242424242424242
 Expiry Date: any future date
 Postal code: 4242424242
+```
+### To run the application on your computer
+1) Clone the repository
+2) Run npm install -> [ on command line ]
+3) Run npm start
 
 <!-- # Getting Started with Create React App
 
